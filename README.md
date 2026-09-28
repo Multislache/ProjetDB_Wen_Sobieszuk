@@ -98,6 +98,10 @@ N°	Nom de la donnée	Signification	Type	Taille
 32	date_transaction	Date et heure de la transaction	Date	19
 
 33	moyen_paiement	Moyen de paiement utilisé	Alphanumérique	20
+
 34	id_signalement	Identifiant unique du signalement	Numérique	10
+
 35	motif_signalement	Catégorie du motif de signalement	Alphanumérique	100
+
 36	decision_moderation	Décision prise par le modérateur	Alphanumérique	100
+
