@@ -1,17 +1,17 @@
-Create Table Joueur (
+-- 1_creation.sql
+-- MPD généré à partir de la version 2 du MLD (Corrections Transactions et Bannissements)
+
+CREATE TABLE Joueur (
     id_joueur INT PRIMARY KEY,
     pseudo VARCHAR(50) NOT NULL,
     email VARCHAR(150) NOT NULL,
     mot_de_passe_hash VARCHAR(255) NOT NULL,
     date_creation_compte DATE NOT NULL,
     pays_residence VARCHAR(50),
-    statut_compte VARCHAR(20),
-    motif_suspension TEXT,
-    date_suspension DATE,
     rang_joueur INT
 );
 
-Create Table Jeu (
+CREATE TABLE Jeu (
     id_jeu INT PRIMARY KEY,
     nom_jeu VARCHAR(100) NOT NULL,
     genre_jeu VARCHAR(50),
@@ -19,22 +19,29 @@ Create Table Jeu (
     plateforme VARCHAR(50)
 );
 
-Create Table Transaction (
+CREATE TABLE Transaction (
     id_transaction INT PRIMARY KEY,
     montant_transaction DECIMAL(10, 2) NOT NULL,
     date_transaction DATETIME NOT NULL,
-    moyen_paiement VARCHAR(50)
+    moyen_paiement VARCHAR(50),
+    id_joueur INT NOT NULL,
+    id_jeu INT NOT NULL,
+    FOREIGN KEY (id_joueur) REFERENCES Joueur(id_joueur) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_jeu) REFERENCES Jeu(id_jeu) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-Create Table joue_a (
+CREATE TABLE joue_a (
     id_joueur INT,
     id_jeu INT,
+    statut_compte VARCHAR(20) NOT NULL,
+    date_suspension DATE,
+    motif_suspension TEXT,
     PRIMARY KEY (id_joueur, id_jeu),
     FOREIGN KEY (id_joueur) REFERENCES Joueur(id_joueur) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_jeu) REFERENCES Jeu(id_jeu) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-Create Table Patch (
+CREATE TABLE Patch (
     id_jeu INT,
     id_patch INT,
     num_version VARCHAR(20) NOT NULL,
@@ -43,15 +50,7 @@ Create Table Patch (
     FOREIGN KEY (id_jeu) REFERENCES Jeu(id_jeu) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-Create Table achete_dans (
-    id_jeu INT,
-    id_transaction INT,
-    PRIMARY KEY (id_jeu, id_transaction),
-    FOREIGN KEY (id_jeu) REFERENCES Jeu(id_jeu) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_transaction) REFERENCES Transaction(id_transaction) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-Create Table Personnage (
+CREATE TABLE Personnage (
     id_jeu INT,
     id_personnage INT,
     nom_personnage VARCHAR(100) NOT NULL,
@@ -61,7 +60,7 @@ Create Table Personnage (
     FOREIGN KEY (id_jeu) REFERENCES Jeu(id_jeu) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-Create Table Partie (
+CREATE TABLE Partie (
     id_partie INT PRIMARY KEY,
     date_partie DATETIME NOT NULL,
     mode_jeu VARCHAR(50),
@@ -73,7 +72,7 @@ Create Table Partie (
     FOREIGN KEY (id_jeu) REFERENCES Jeu(id_jeu) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-Create Table joue_dans (
+CREATE TABLE joue_dans (
     id_joueur INT,
     id_partie INT,
     PRIMARY KEY (id_joueur, id_partie),
@@ -81,7 +80,7 @@ Create Table joue_dans (
     FOREIGN KEY (id_partie) REFERENCES Partie(id_partie) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-Create Table Signalement (
+CREATE TABLE Signalement (
     id_partie INT,
     id_signalement INT,
     motif_signalement TEXT NOT NULL,
