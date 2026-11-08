@@ -1,5 +1,10 @@
 -- 3_insertion.sql
 -- Remplissage de la base de données (Univers Riot Games - MLD V2).
+-- Données du scénario (4_interrogation.sql), repérées par « -- Scénario » :
+--   - Keria (id 25) banni de Valorant le 2023-06-29 (partie 51, faux positif Vanguard),
+--   - Mixwell (id 12) banni de Valorant le 2023-11-11 (partie 52, même motif),
+--   - patch Valorant fautif v6.11 publié le 2023-06-27,
+--   - achat League of Legends de Keria à rembourser : transaction 19.
 
 
 -- Insertion dans la table Joueur
@@ -144,11 +149,14 @@ INSERT INTO joue_a (id_joueur, id_jeu, statut_compte, date_suspension, motif_sus
 INSERT INTO joue_a (id_joueur, id_jeu, statut_compte, date_suspension, motif_suspension) VALUES (30, 4, 'Actif', NULL, NULL);
 INSERT INTO joue_a (id_joueur, id_jeu, statut_compte, date_suspension, motif_suspension) VALUES (9, 3, 'Banni', '2023-05-02', 'Inactivité prolongée');
 INSERT INTO joue_a (id_joueur, id_jeu, statut_compte, date_suspension, motif_suspension) VALUES (11, 3, 'Banni', '2023-09-02', 'Discours haineux dans le chat');
-INSERT INTO joue_a (id_joueur, id_jeu, statut_compte, date_suspension, motif_suspension) VALUES (25, 2, 'Inactif', NULL, NULL);
+-- Scénario : Keria bannie de Valorant (ban contesté, précédemment 'Inactif')
+INSERT INTO joue_a (id_joueur, id_jeu, statut_compte, date_suspension, motif_suspension) VALUES (25, 2, 'Banni', '2023-06-29', 'Triche avérée (Vanguard)');
 INSERT INTO joue_a (id_joueur, id_jeu, statut_compte, date_suspension, motif_suspension) VALUES (30, 10, 'Inactif', NULL, NULL);
 INSERT INTO joue_a (id_joueur, id_jeu, statut_compte, date_suspension, motif_suspension) VALUES (15, 6, 'Actif', NULL, NULL);
 INSERT INTO joue_a (id_joueur, id_jeu, statut_compte, date_suspension, motif_suspension) VALUES (25, 8, 'Suspendu', '2023-03-15', 'Discours haineux dans le chat');
 INSERT INTO joue_a (id_joueur, id_jeu, statut_compte, date_suspension, motif_suspension) VALUES (29, 2, 'Actif', NULL, NULL);
+-- Scénario : Keria joue aussi à League of Legends (achat à rembourser)
+INSERT INTO joue_a (id_joueur, id_jeu, statut_compte, date_suspension, motif_suspension) VALUES (25, 1, 'Actif', NULL, NULL);
 
 -- Insertion dans la table Patch
 INSERT INTO Patch (id_jeu, id_patch, num_version, date_publication) VALUES (5, 1, 'v4.11', '2023-09-22');
@@ -171,6 +179,8 @@ INSERT INTO Patch (id_jeu, id_patch, num_version, date_publication) VALUES (3, 1
 INSERT INTO Patch (id_jeu, id_patch, num_version, date_publication) VALUES (4, 18, 'v13.23', '2022-06-20');
 INSERT INTO Patch (id_jeu, id_patch, num_version, date_publication) VALUES (2, 19, 'v4.20', '2023-05-03');
 INSERT INTO Patch (id_jeu, id_patch, num_version, date_publication) VALUES (3, 20, 'v12.15', '2022-10-23');
+-- Scénario : patch Valorant fautif (anti-triche Vanguard)
+INSERT INTO Patch (id_jeu, id_patch, num_version, date_publication) VALUES (2, 21, 'v6.11', '2023-06-27');
 
 -- Insertion dans la table Personnage
 INSERT INTO Personnage (id_jeu, id_personnage, nom_personnage, role_personnage, date_ajout_personnage) VALUES (1, 1, 'Ahri', 'Mage', '2012-05-28');
@@ -245,6 +255,9 @@ INSERT INTO Partie (id_partie, date_partie, mode_jeu, duree_partie, resultat_par
 INSERT INTO Partie (id_partie, date_partie, mode_jeu, duree_partie, resultat_partie, nb_elimination, score_partie, id_jeu) VALUES (48, '2024-02-20 06:16:33', 'Entraînement', 2159, 'Victoire', 40, 680, 3);
 INSERT INTO Partie (id_partie, date_partie, mode_jeu, duree_partie, resultat_partie, nb_elimination, score_partie, id_jeu) VALUES (49, '2023-01-31 10:40:50', 'Coop', 975, 'Abandon', 40, 2689, 4);
 INSERT INTO Partie (id_partie, date_partie, mode_jeu, duree_partie, resultat_partie, nb_elimination, score_partie, id_jeu) VALUES (50, '2023-11-27 19:57:21', 'Coop', 2685, 'Abandon', 5, 2139, 2);
+-- Scénario : parties Valorant ayant mené aux bans de Keria puis de Mixwell
+INSERT INTO Partie (id_partie, date_partie, mode_jeu, duree_partie, resultat_partie, nb_elimination, score_partie, id_jeu) VALUES (51, '2023-06-29 21:14:00', 'Classé', 2140, 'Victoire', 24, 4120, 2);
+INSERT INTO Partie (id_partie, date_partie, mode_jeu, duree_partie, resultat_partie, nb_elimination, score_partie, id_jeu) VALUES (52, '2023-11-11 16:02:00', 'Classé', 1985, 'Défaite', 17, 2890, 2);
 
 -- Insertion dans la table joue_dans
 INSERT INTO joue_dans (id_joueur, id_partie) VALUES (4, 9);
@@ -367,6 +380,10 @@ INSERT INTO joue_dans (id_joueur, id_partie) VALUES (2, 18);
 INSERT INTO joue_dans (id_joueur, id_partie) VALUES (14, 47);
 INSERT INTO joue_dans (id_joueur, id_partie) VALUES (5, 44);
 INSERT INTO joue_dans (id_joueur, id_partie) VALUES (6, 9);
+-- Scénario : participants des parties 51 et 52
+INSERT INTO joue_dans (id_joueur, id_partie) VALUES (25, 51);
+INSERT INTO joue_dans (id_joueur, id_partie) VALUES (12, 51);
+INSERT INTO joue_dans (id_joueur, id_partie) VALUES (12, 52);
 
 -- Insertion dans la table Signalement
 INSERT INTO Signalement (id_partie, id_signalement, motif_signalement, decision_moderation) VALUES (18, 1, 'Harcèlement textuel', 'Aucune action');
@@ -384,3 +401,7 @@ INSERT INTO Signalement (id_partie, id_signalement, motif_signalement, decision_
 INSERT INTO Signalement (id_partie, id_signalement, motif_signalement, decision_moderation) VALUES (9, 13, 'Utilisation de scripts', 'Suspension');
 INSERT INTO Signalement (id_partie, id_signalement, motif_signalement, decision_moderation) VALUES (30, 14, 'AFK / Déconnexion', 'Aucune action');
 INSERT INTO Signalement (id_partie, id_signalement, motif_signalement, decision_moderation) VALUES (4, 15, 'Harcèlement textuel', 'Bannissement');
+
+-- Scénario : signalements Vanguard ayant mené aux bannissements
+INSERT INTO Signalement (id_partie, id_signalement, motif_signalement, decision_moderation) VALUES (51, 16, 'Utilisation de scripts', 'Bannissement');
+INSERT INTO Signalement (id_partie, id_signalement, motif_signalement, decision_moderation) VALUES (52, 17, 'Utilisation de scripts', 'Bannissement');
