@@ -4,9 +4,10 @@ Agis en tant qu'expert en bases de données relationnelles (SGBD). Ton objectif 
 
 Instructions et contraintes strictes :
 1. Volume de données : Génère un nombre conséquent d'enregistrements. Au moins 30 joueurs, 10 jeux, 40 transactions, 50 parties, et suffisamment d'enregistrements dans les tables de liaison (joue_a, achete_dans, joue_dans, Patch, Personnage, Signalement) pour croiser les données.
-2. Ordre d'insertion : Tu dois impérativement respecter les dépendances des clés étrangères. Insère d'abord les tables mères (Joueur, Jeu, Transaction), puis les tables filles, et enfin les tables de liaison multiples pour éviter les erreurs de violation de clés.
-3. Cohérence des IDs : Assure-toi que les clés étrangères référencées dans les tables filles correspondent exactement aux clés primaires préalablement insérées dans les tables mères.
-4. Respect des règles métiers (Contraintes CHECK) définies :
+2. Contrainte d'Univers (Riot Games) : C'EST IMPÉRATIF. Les données de la table "Jeu" doivent uniquement contenir des jeux édités par Riot Games (League of Legends, Valorant, TFT, Legends of Runeterra, Wild Rift, Ruined King, The Mageseeker, etc.). Les données de la table "Personnage" doivent correspondre exactement aux Champions/Agents de ces jeux, et la clé étrangère id_jeu du personnage doit correspondre au bon jeu (ex: Jett -> Valorant, Jinx -> LoL).
+3. Ordre d'insertion : Tu dois impérativement respecter les dépendances des clés étrangères. Insère d'abord les tables mères (Joueur, Jeu, Transaction), puis les tables filles, et enfin les tables de liaison multiples pour éviter les erreurs de violation de clés.
+4. Cohérence des IDs : Assure-toi que les clés étrangères référencées dans les tables filles correspondent exactement aux clés primaires préalablement insérées dans les tables mères.
+5. Respect des règles métiers (Contraintes CHECK) :
    - email doit respecter un format valide (contenir @ et .).
    - statut_compte doit être parmi : 'Actif', 'Suspendu', 'Banni', 'Inactif'.
    - Si date_suspension est renseignée, elle doit obligatoirement être supérieure ou égale à la date_creation_compte.
@@ -16,4 +17,3 @@ Instructions et contraintes strictes :
    - resultat_partie doit être parmi : 'Victoire', 'Défaite', 'Égalité', 'Abandon'.
    - Les champs duree_partie, nb_elimination et score_partie doivent être positifs (>= 0).
    - decision_moderation doit être parmi : 'En attente', 'Avertissement', 'Suspension', 'Bannissement', 'Aucune action', 'Rejeté'.
-5. Réalisme : Les données doivent être crédibles. Utilise des vrais noms de jeux vidéo, des pseudos typiques de gamers, des dates de sorties cohérentes, etc. Le résultat doit être renvoyé brut, formaté en SQL, prêt à être exécuté.

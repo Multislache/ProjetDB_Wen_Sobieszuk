@@ -1,4 +1,4 @@
-CREATE TABLE Joueur (
+Create Table Joueur (
     id_joueur INT PRIMARY KEY,
     pseudo VARCHAR(50) NOT NULL,
     email VARCHAR(150) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE Joueur (
     rang_joueur INT
 );
 
-CREATE TABLE Jeu (
+Create Table Jeu (
     id_jeu INT PRIMARY KEY,
     nom_jeu VARCHAR(100) NOT NULL,
     genre_jeu VARCHAR(50),
@@ -19,14 +19,14 @@ CREATE TABLE Jeu (
     plateforme VARCHAR(50)
 );
 
-CREATE TABLE Transaction (
+Create Table Transaction (
     id_transaction INT PRIMARY KEY,
     montant_transaction DECIMAL(10, 2) NOT NULL,
     date_transaction DATETIME NOT NULL,
     moyen_paiement VARCHAR(50)
 );
 
-CREATE TABLE joue_a (
+Create Table joue_a (
     id_joueur INT,
     id_jeu INT,
     PRIMARY KEY (id_joueur, id_jeu),
@@ -34,7 +34,7 @@ CREATE TABLE joue_a (
     FOREIGN KEY (id_jeu) REFERENCES Jeu(id_jeu) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Patch (
+Create Table Patch (
     id_jeu INT,
     id_patch INT,
     num_version VARCHAR(20) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE Patch (
     FOREIGN KEY (id_jeu) REFERENCES Jeu(id_jeu) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE achete_dans (
+Create Table achete_dans (
     id_jeu INT,
     id_transaction INT,
     PRIMARY KEY (id_jeu, id_transaction),
@@ -51,7 +51,7 @@ CREATE TABLE achete_dans (
     FOREIGN KEY (id_transaction) REFERENCES Transaction(id_transaction) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Personnage (
+Create Table Personnage (
     id_jeu INT,
     id_personnage INT,
     nom_personnage VARCHAR(100) NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE Personnage (
     FOREIGN KEY (id_jeu) REFERENCES Jeu(id_jeu) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Partie (
+Create Table Partie (
     id_partie INT PRIMARY KEY,
     date_partie DATETIME NOT NULL,
     mode_jeu VARCHAR(50),
@@ -73,7 +73,7 @@ CREATE TABLE Partie (
     FOREIGN KEY (id_jeu) REFERENCES Jeu(id_jeu) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE joue_dans (
+Create Table joue_dans (
     id_joueur INT,
     id_partie INT,
     PRIMARY KEY (id_joueur, id_partie),
@@ -81,7 +81,7 @@ CREATE TABLE joue_dans (
     FOREIGN KEY (id_partie) REFERENCES Partie(id_partie) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Signalement (
+Create Table Signalement (
     id_partie INT,
     id_signalement INT,
     motif_signalement TEXT NOT NULL,
